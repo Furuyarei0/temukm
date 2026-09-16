@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+  --gold-deep: #4e3a22;
+  --gold-mid: #7a5c32;
+  --gold-bright: #c4a574;
+  --cream: #efe6c9;
+  --card: #d7ccb0;
+  --ink: #f6f0df;
+  --footer: #3d3224;
+}
+
+@theme inline {
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-mid: var(--gold-mid);
+  --color-gold-bright: var(--gold-bright);
+  --color-cream: var(--cream);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-footer: var(--footer);
+  --font-sans: var(--font-inria-serif);
+  --font-serif: var(--font-inria-serif);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  color: var(--ink);
+  font-family: var(--font-inria-serif), serif;
+  background: #6d5330;
+}
+
+.gold-stage {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  background:
+    radial-gradient(1200px 500px at 50% 8%, rgba(255, 236, 190, 0.38), transparent 58%),
+    linear-gradient(180deg, #8a6a3b 0%, #6d5330 42%, #5a4326 100%);
+}
+
+.gold-stage::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+}
+
+.hero-title {
+  font-family: "Butler", "Iowan Old Style", "Book Antiqua", "Georgia", serif;
+  letter-spacing: 0.08em;
+}
+
+.gold-rays {
+  position: absolute;
+  inset: 8% 10% auto;
+  height: 38vh;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    rgba(255, 248, 228, 0.07) 18px,
+    transparent 42px,
+    rgba(255, 248, 228, 0.16) 70px,
+    transparent 110px
+  );
+  filter: blur(10px);
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent);
+}
+
+.glass-nav {
+  background: rgba(210, 196, 160, 0.28);
+  border: 1px solid rgba(255, 245, 220, 0.22);
+  box-shadow: 0 8px 30px rgba(40, 24, 8, 0.18);
+  backdrop-filter: blur(16px);
+}
+
+.glass-panel {
+  background: rgba(196, 178, 140, 0.22);
+  border: 1px solid rgba(255, 245, 220, 0.16);
+  box-shadow: 0 20px 60px rgba(30, 18, 6, 0.28);
+  backdrop-filter: blur(18px);
+}
+
+.org-photo {
+  filter: sepia(0.35) saturate(0.72) contrast(0.95) brightness(0.95);
+}
+
+.card-surface {
+  background: linear-gradient(180deg, #ddd3b8 0%, #cfc3a4 100%);
+}
+
+.legal-link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.field-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  background: #efe6c9;
+  padding: 0.5rem 0.75rem;
+  color: #3d2a16;
+}
