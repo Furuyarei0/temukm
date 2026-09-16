@@ -35,7 +35,11 @@ export function SiteFooter() {
   const [openMenu, setOpenMenu] = useState<"instagram" | "linkedin" | null>(null);
 
   return (
-    <footer className="relative z-20 bg-[#3d3224] text-[#f0e6d0]">
+    <footer
+      className={`relative z-20 bg-[#524632] text-[#f0e6d0] transition-[padding] duration-300 ${
+        openMenu === "instagram" ? "pb-44" : ""
+      }`}
+    >
       <div className="flex flex-col gap-6 px-6 py-8 md:flex-row md:items-start md:justify-between md:px-10">
         <p className="max-w-xs text-sm leading-relaxed">
           Jl. Jambi Ma. Bulian KM.16 Simpang Sungai
