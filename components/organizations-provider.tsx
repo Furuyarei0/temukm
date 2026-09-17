@@ -6,7 +6,7 @@ import {
   fetchOrganizations,
   upsertOrganization,
 } from "@/lib/organizations";
-import { getSupabaseBrowserClient } from "@/lib/supabase/client";
+import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase/client";
 import { SEED_ORGANIZATIONS } from "@/lib/seed";
 import type { Organization, OrganizationInput } from "@/lib/types";
 
@@ -21,7 +21,9 @@ type OrgContextValue = {
 const OrgContext = createContext<OrgContextValue | null>(null);
 
 export function OrganizationsProvider({ children }: { children: React.ReactNode }) {
-  const [organizations, setOrganizations] = useState<Organization[]>(SEED_ORGANIZATIONS);
+  const [organizations, setOrganizations] = useState<Organization[]>(
+    isSupabaseConfigured() ? [] : SEED_ORGANIZATIONS,
+  );
   const [loading, setLoading] = useState(true);
 
   const refresh = async () => {

@@ -119,7 +119,7 @@ export const SEED_ORGANIZATIONS: Organization[] = [
     description:
       'Didirikan pada kisaran tahun 2017/2018, UKM CINEMA SUTHA berfokus pada pengembangan kreativitas digital mahasiswa dalam ranah sinematografi, pembuatan film, editing video, dan penyiaran (broadcasting). Berada di bawah pembinaan Unit Pengembangan Kewirausahaan dan Karir (UPKK) serta bekerjasama dengan Pusat Pengembangan Bisnis UIN STS Jambi, CINEMA SUTHA memosisikan diri sebagai rumah produksi (production house) kreatif kampus. CINEMA SUTHA memproduksi berbagai jenis karya sinematik, mulai dari film pendek fiksi, dokumenter, hingga video profil kelembagaan universitas—seperti karya film "KUJU", "AKSARA", dan "Arutala Film". Karya-karya visual UKM ini tidak hanya ditayangkan secara komersial dan edukatif, melainkan juga sukses memenangkan kompetisi internasional, seperti perolehan medali emas dalam SeIBa International Festival.',
     cover_image_url:
-      "https://images.unsplash.com/photo-1485846234645-a62644f55377?auto=format&fit=crop&w=1400&q=80",
+      "https://plus.unsplash.com/premium_photo-1682125771198-f7cbed7cb868?q=80&w=1460&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     qr_image_url: qr("https://temukm.local/gabung/cinema-sutha"),
     join_url: "https://temukm.local/gabung/cinema-sutha",
     sort_order: 7,
@@ -143,21 +143,5 @@ export const SEED_ORGANIZATIONS: Organization[] = [
     created_at: now,
     updated_at: now,
   },
-  {
-    id: "11111111-1111-4111-8111-111111111009",
-    slug: "ibm",
-    name: "UKM IBM",
-    category: "UKM",
-    summary:
-      "Ikatan Beladiri Mahasiswa — pencak silat, pembinaan karakter, dan prestasi nasional.",
-    description:
-      "UKM Ikatan Beladiri Mahasiswa (IBM) UIN STS Jambi berdiri sekitar tahun 2021 sebagai wadah pembinaan pencak silat dan bela diri mahasiswa. Unit ini menempa fisik, mental, dan karakter melalui latihan rutin seni bela diri tradisional Indonesia, dengan penekanan pada sportivitas serta pelestarian budaya. UKM IBM telah menoreh prestasi di kancah nasional, termasuk juara umum kategori dewasa/mahasiswa pada Pencak Silat Championship Jambi 2024 dengan perolehan 15 medali, serta penghargaan pada Kejuaraan Bandung Lautan Api tingkat nasional. Prestasi tersebut menjadi bukti kerja keras kader dan pembina dalam mengembangkan bakat bela diri di lingkungan UIN STS Jambi.",
-    cover_image_url:
-      "https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1400&q=80",
-    qr_image_url: qr("https://temukm.local/gabung/ibm"),
-    join_url: "https://temukm.local/gabung/ibm",
-    sort_order: 9,
-    created_at: now,
-    updated_at: now,
-  },
+  
 ];
