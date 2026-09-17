@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "temUKM — Portal UKK/UKM UIN STS Jambi",
   description:
     "Portal mahasiswa untuk menemukan, mengenal, dan bergabung dengan Unit Kegiatan Mahasiswa di UIN STS Jambi.",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
