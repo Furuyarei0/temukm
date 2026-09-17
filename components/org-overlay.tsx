@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { createPortal } from "react-dom";
 import { useEffect } from "react";
 import type { Organization } from "@/lib/types";
 
@@ -12,34 +13,40 @@ type Props = {
 export function OrgOverlay({ org, onClose }: Props) {
   useEffect(() => {
     if (!org) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
   }, [org, onClose]);
 
-  return (
-    <AnimatePresence>
-      {org ? (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center px-4 py-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
+  return typeof document !== "undefined"
+    ? createPortal(
+        <AnimatePresence>
+          {org ? (
+            <motion.div
+              className="fixed inset-0 z-[100] flex items-center justify-center px-4 py-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
           <button
             type="button"
             className="absolute inset-0 bg-[#2a1e12]/70 backdrop-blur-sm"
             aria-label="Tutup overlay"
             onClick={onClose}
           />
-          <motion.article
-            initial={{ scale: 0.94, opacity: 0, y: 16 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.96, opacity: 0 }}
-            className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-[28px] border border-[#f3ead4]/20 bg-[#5a4428]/90 p-6 text-[#f6edd8] shadow-2xl backdrop-blur-xl md:p-10"
-          >
+              <motion.article
+                initial={{ scale: 0.94, opacity: 0, y: 16 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.96, opacity: 0 }}
+                className="relative z-10 max-h-[90vh] w-full max-w-3xl overflow-y-auto scrollbar-none rounded-[28px] border border-[#f3ead4]/20 bg-[#5a4428]/90 p-6 text-[#f6edd8] shadow-2xl backdrop-blur-xl md:p-10"
+              >
             <p className="text-xs uppercase tracking-[0.2em] text-[#e8d7b0]">{org.category}</p>
             <h2 className="mt-2 font-serif text-3xl md:text-4xl">{org.name}</h2>
             <p className="mt-5 text-sm leading-relaxed text-[#f3ead4]/90 md:text-[15px]">{org.description}</p>
@@ -61,8 +68,10 @@ export function OrgOverlay({ org, onClose }: Props) {
               Kembali
             </button>
           </motion.article>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
-  );
+            </motion.div>
+          ) : null}
+        </AnimatePresence>,
+        document.body,
+      )
+    : null;
 }

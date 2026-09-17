@@ -109,3 +109,12 @@ body {
   padding: 0.5rem 0.75rem;
   color: #3d2a16;
 }
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

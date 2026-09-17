@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
 import type { Organization } from "@/lib/types";
 
@@ -25,8 +26,80 @@ export function OrgCard({ org, onJoinDesktop }: Props) {
 
   const close = () => setMode("idle");
 
+  useEffect(() => {
+    if (!expanded || isFinePointer) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [expanded, isFinePointer]);
+
   return (
     <>
+      {typeof document !== "undefined"
+        ? createPortal(
+            <AnimatePresence>
+              {expanded ? (
+                <motion.div
+                  className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <button type="button" className="absolute inset-0 bg-[#2a1e12]/75" aria-label="Tutup" onClick={close} />
+                  <motion.div
+                    layoutId={org.id}
+                    className="relative z-10 max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto scrollbar-none rounded-[32px] bg-[#d7ccb0] text-[#3d2a16] shadow-2xl"
+                    initial={{ scale: 0.9, y: 24 }}
+                    animate={{ scale: mode === "qr" ? 1.04 : 1, y: 0 }}
+                    exit={{ scale: 0.94, opacity: 0 }}
+                  >
+                    {mode === "qr" ? (
+                      <div className="flex min-h-[420px] flex-col items-center justify-center px-6 py-10">
+                        <img
+                          src={org.qr_image_url}
+                          alt={`QR Code ${org.name}`}
+                          className="h-64 w-64 rounded-2xl bg-[#efe6c9] p-3"
+                        />
+                        <p className="mt-4 text-center text-sm">Pindai QR di tengah layar untuk mendaftar.</p>
+                        <button
+                          type="button"
+                          onClick={close}
+                          className="mt-6 rounded-full bg-[#4a3822] px-6 py-2 text-sm text-[#f6edd8]"
+                        >
+                          Kembali
+                        </button>
+                      </div>
+                    ) : (
+                      <div>
+                        <img src={org.cover_image_url} alt="" className="org-photo h-40 w-full object-cover" />
+                        <div className="px-5 py-5">
+                          <p className="text-xs uppercase tracking-[0.18em]">{org.category}</p>
+                          <h3 className="font-serif text-2xl">{org.name}</h3>
+                          <p className="mt-3 max-h-48 overflow-y-auto text-sm leading-relaxed">{org.description}</p>
+                          <div className="mt-5 flex gap-3">
+                            <button
+                              type="button"
+                              className="rounded-full bg-[#4a3822] px-5 py-2 text-sm text-[#f6edd8]"
+                              onClick={() => setMode("qr")}
+                            >
+                              Gabung
+                            </button>
+                            <button type="button" className="rounded-full px-5 py-2 text-sm" onClick={close}>
+                              Kembali
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
       <motion.article
         layout
         initial={{ opacity: 0, y: 18, scale: 0.98 }}
@@ -66,64 +139,6 @@ export function OrgCard({ org, onJoinDesktop }: Props) {
         ) : null}
       </motion.article>
 
-      <AnimatePresence>
-        {expanded ? (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <button type="button" className="absolute inset-0 bg-[#2a1e12]/75" aria-label="Tutup" onClick={close} />
-            <motion.div
-              layoutId={org.id}
-              className="relative z-10 w-full max-w-md overflow-hidden rounded-[32px] bg-[#d7ccb0] text-[#3d2a16] shadow-2xl"
-              initial={{ scale: 0.9, y: 24 }}
-              animate={{ scale: mode === "qr" ? 1.04 : 1, y: 0 }}
-              exit={{ scale: 0.94, opacity: 0 }}
-            >
-              {mode === "qr" ? (
-                <div className="flex min-h-[420px] flex-col items-center justify-center px-6 py-10">
-                  <img
-                    src={org.qr_image_url}
-                    alt={`QR Code ${org.name}`}
-                    className="h-64 w-64 rounded-2xl bg-[#efe6c9] p-3"
-                  />
-                  <p className="mt-4 text-center text-sm">Pindai QR di tengah layar untuk mendaftar.</p>
-                  <button
-                    type="button"
-                    onClick={close}
-                    className="mt-6 rounded-full bg-[#4a3822] px-6 py-2 text-sm text-[#f6edd8]"
-                  >
-                    Kembali
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <img src={org.cover_image_url} alt="" className="org-photo h-40 w-full object-cover" />
-                  <div className="px-5 py-5">
-                    <p className="text-xs uppercase tracking-[0.18em]">{org.category}</p>
-                    <h3 className="font-serif text-2xl">{org.name}</h3>
-                    <p className="mt-3 max-h-48 overflow-y-auto text-sm leading-relaxed">{org.description}</p>
-                    <div className="mt-5 flex gap-3">
-                      <button
-                        type="button"
-                        className="rounded-full bg-[#4a3822] px-5 py-2 text-sm text-[#f6edd8]"
-                        onClick={() => setMode("qr")}
-                      >
-                        Gabung
-                      </button>
-                      <button type="button" className="rounded-full px-5 py-2 text-sm" onClick={close}>
-                        Kembali
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
     </>
   );
 }
