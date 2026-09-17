@@ -7,7 +7,6 @@ import { useOrganizations } from "@/components/organizations-provider";
 import type { Organization, OrganizationInput, OrgCategory } from "@/lib/types";
 
 const LOCAL_ADMIN_KEY = "temukm.admin-local";
-const ADMIN_PASSWORD = "HAFAAD";
 
 const emptyForm: OrganizationInput = {
   slug: "",
@@ -24,6 +23,7 @@ const emptyForm: OrganizationInput = {
 export default function AdminPage() {
   const { organizations, save, remove } = useOrganizations();
   const [session, setSession] = useState<"loading" | "guest" | "in">("loading");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -52,13 +52,19 @@ export default function AdminPage() {
     event.preventDefault();
     setError("");
 
-    if (password !== ADMIN_PASSWORD) {
-      setError("Password salah. Gunakan password yang benar untuk masuk.");
+    const supabase = getSupabaseBrowserClient();
+    if (!supabase) {
+      setError("Konfigurasi Supabase belum tersedia.");
       return;
     }
 
-    sessionStorage.setItem(LOCAL_ADMIN_KEY, "1");
-    setSession("in");
+    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+    if (loginError) {
+      setError("Email atau password Supabase salah.");
+      return;
+    }
+
+    sessionStorage.removeItem(LOCAL_ADMIN_KEY);
   };
 
   const logout = async () => {
@@ -133,6 +139,16 @@ export default function AdminPage() {
             Masukkan password yang benar untuk mengakses dashboard.
           </p>
           <label className="mt-6 block text-sm">
+            Email Supabase
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mt-1 w-full rounded-xl bg-[#efe6c9] px-3 py-2 text-[#3d2a16]"
+            />
+          </label>
+          <label className="mt-4 block text-sm">
             Password
             <div className="relative mt-1">
               <input
