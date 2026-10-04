@@ -35,12 +35,12 @@ export function SiteFooter() {
   const [openMenu, setOpenMenu] = useState<"instagram" | "linkedin" | null>(null);
 
   return (
-    <footer
-      className={`relative z-20 bg-[#524632] text-[#f0e6d0] transition-[padding] duration-300 ${
-        openMenu === "instagram" ? "pb-44" : ""
-      }`}
-    >
-      <div className="flex flex-col gap-6 px-6 py-8 md:flex-row md:items-start md:justify-between md:px-10">
+    <footer className="relative z-20 bg-[#524632] text-[#f0e6d0]">
+      <div
+        className={`flex flex-col gap-6 px-6 py-8 md:flex-row md:items-start md:justify-between md:px-10 ${
+          openMenu ? "pb-44" : ""
+        }`}
+      >
         <p className="max-w-xs text-sm leading-relaxed">
           Jl. Jambi Ma. Bulian KM.16 Simpang Sungai
           <br />
@@ -50,7 +50,7 @@ export function SiteFooter() {
           <div className="relative">
             <button
               type="button"
-              aria-label="Instagram profiles"
+              aria-label="Profil Instagram"
               onClick={() => setOpenMenu(openMenu === "instagram" ? null : "instagram")}
               className="hover:opacity-80"
             >
@@ -76,7 +76,7 @@ export function SiteFooter() {
           <div className="relative">
             <button
               type="button"
-              aria-label="LinkedIn profiles"
+              aria-label="Profil LinkedIn"
               onClick={() => setOpenMenu(openMenu === "linkedin" ? null : "linkedin")}
               className="hover:opacity-80"
             >
@@ -101,14 +101,13 @@ export function SiteFooter() {
         </div>
       </div>
       <p className="px-6 pb-6 text-xs leading-relaxed text-[#e8dcc4] md:px-10">
-        © 2026 temUKM, Inc.{" "}
+        © 2026 temUKM. Hak cipta dilindungi. {" "}
         <Link href="/terms" className="legal-link">
-          Terms
+          Ketentuan
         </Link>{" "}
         <Link href="/privacy" className="legal-link">
-          Privacy
+          Privasi
         </Link>{" "}
-        Manage cookies Do not share my personal information All right reserved
       </p>
     </footer>
   );

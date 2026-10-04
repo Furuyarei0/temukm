@@ -14,6 +14,9 @@ export function OrgGrid() {
   return (
     <section className="relative z-10 px-4 pb-16 md:px-10">
       <div className="glass-panel mx-auto max-w-5xl rounded-[36px] px-5 py-8 md:px-10 md:py-12">
+        <h2 className="mb-6 text-center text-2xl font-semibold text-[#f3ead4] md:text-3xl">
+          Daftar UKK/UKM
+        </h2>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {organizations.map((org, index) => (
             <motion.div

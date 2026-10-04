@@ -16,7 +16,7 @@ export function HeroSection() {
 
   return (
     <div ref={ref} className="relative z-0 h-[125vh]">
-      <section className="sticky top-0 flex h-screen items-start justify-center overflow-hidden pt-[18vh]">
+      <section className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <motion.div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-90"
           style={{ backgroundImage: "url('/background.png')" }}
