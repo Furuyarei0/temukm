@@ -58,6 +58,27 @@ body {
   letter-spacing: 0.08em;
 }
 
+.scroll-hint {
+  animation: scroll-hint 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint {
+    animation: none;
+  }
+}
+
 .gold-rays {
   position: absolute;
   inset: 8% 10% auto;
